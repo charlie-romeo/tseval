@@ -84,13 +84,19 @@ def dtg_to_seconds(line):
 # count number of duplicate commands => 
 # what good is duplicate efforts 
 def dup_count(u_tg_log):
+    cmd_count = 0
     cmd_count_dict = {}
+    s, a = [], []
     for line in u_tg_log:
-        # count each instance of a command
-        if line in cmd_count_dict:
-            cmd_count_dict[line] += 1
-        else:
-            cmd_count_dict[line] = 1   
+        s = line.split("%",2)
+        a.append(s[1])
+        x = list(set(a))
+    for i in x:
+        for j in a:
+            if i in j: 
+                cmd_count += 1
+                cmd_count_dict.update({i:cmd_count})
+        cmd_count = 0
     return(cmd_count_dict)
 # function: help options of cli arguments
 def usage():
@@ -100,7 +106,7 @@ def usage():
     print ('Evaluate the quality of a troublshooting effort')
     print (' ')
     print (' example:')
-    print (' tseval.py -g C:\knowngoodlog.txt -t C:\targetlog.txt')
+    print (' tseval.py -g C:\knowngoodlog.txt -t C:\\targetlog.txt')
     print (' -g Known good log file prepared by NOSS')
     print (' -t Target log file to evaluate')
     print (' -------------------------------------------------------------------------')
@@ -127,13 +133,15 @@ def main(argv):
             tglog_file_path = arg
         elif opt in ("-u"):
             user_name = arg
-
+    #make function calls and set to variables
     u_tg_log = parse_user_data(tglog_file_path, user_name)
     kg_list = parse_known_good(kglog_file_path)
     resolution_cmds = parse_res_cmds(kglog_file_path)
     eval_dict = good_ts_count(kg_list, u_tg_log)
+    cmd_count_dict = dup_count(u_tg_log)
     first_line = u_tg_log[0]
     last_line = u_tg_log[-1]
+    #do the math
     start_seconds = (dtg_to_seconds(first_line))
     end_seconds = (dtg_to_seconds(last_line))
     elapsed_seconds = end_seconds - start_seconds
