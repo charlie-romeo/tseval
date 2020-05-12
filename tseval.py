@@ -167,6 +167,7 @@ def main(argv):
     print(len(u_tg_log), " commands issued by user")
     print(len(kg_list)," expected commands")
     print(extraneous_cmds," ineffective or extra user commands")
+    print(len(cmd_count_dict) ," commands were reptead")
     print("----------------------------------------------")
     print(avg_secs_per_good_cmd, "secs: average time between expected commands")
     print(efficiency, "% trouble shooting efficiency") 
