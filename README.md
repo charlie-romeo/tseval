@@ -2,9 +2,9 @@
 Python script to compare a known-good command list to a log of troubleshooting events </br>
 Input:</br>
 Given a log from a cisco device(*Note The syslog format is compatible with 4.3 BSD UNIX.) containing the troubleshooting session of a user, we want to compare that to a list of commands knows to resolve the inject.</br>
-Outpu:</br>
-Prints a list of attributes related to the session and user.</br>
 
+Output:</br>
+Prints a list of attributes related to the session and user.</br>
   `kg = Known-good file path`</br>
   `tg = Target-log file path`</br>
   `un = Username`</br>
